@@ -15,7 +15,7 @@ prices = client.get_all_tickers()
 csvfile = open('2017-2021.csv','w',newline='')
 candlestick_writer = csv.writer(csvfile,delimiter=',')
 
-klines = client.get_historical_klines("ETHBUSD", Client.KLINE_INTERVAL_5MINUTE, "18 May, 2021", "20 May, 2021")
+klines = client.get_historical_klines("ETHUSDT", Client.KLINE_INTERVAL_5MINUTE, "19 May, 2021", "20 May, 2021")
 # for candlestick in candles:
     # print (candlestick)
     # candlestick_writer.writerow(candlestick)
