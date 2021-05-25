@@ -17,6 +17,25 @@
 			overbought
 			<input type="text" id="rsi_overbought"/>
 		</div>
+        
+        <div id="my_balances">
+            <b>Balances</b>
+            {% for balance in my_balances %}
+            <table>
+                <tr>
+                    <td>
+                        {{balance['asset']}}
+                    </td>
+
+                    <td>
+                        {{balance['free']}}
+                    </td>
+                </tr>
+
+            </table>
+            {% endfor %}
+        </div>
+   
     <script>
 // 
         // webSocket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
