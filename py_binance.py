@@ -48,24 +48,36 @@ def on_message(ws, message):
     is_candle_closed = candle['x']
     close = candle['c']
     
-    if len(ema_list) > 4:
-        ema_list.pop(0)
-    else:
-        ema_list.append(float(close))
-
-    if len(ema_list) > EMA_PERIOD:
-        print ("ok")
-        emaList = numpy.array(ema_list)
-        ema = talib.EMA(emaList, 5)
-        print("all EMA calculated so far")
-        last_ema = float(ema[-1])
-        print("the current EMA is {}".format(last_ema))
+ 
 
     if is_candle_closed:
         print("candle closed at {}".format(close))
-        closes.append(float(close))
+        #closes.append(float(close))
         print("closes")
+
+        if len(ema_list) > 4:
+            ema_list.pop(0)
+        else:
+            ema_list.append(float(close))
+        
+        if len(closes) > 13:
+            closes.pop(0)
+        else:
+            closes.append(float(close))
+        
+        print ("This is for RSI")
         print(closes)
+        print ("This is for EMA")
+        print (ema_list)
+
+        if len(ema_list) > EMA_PERIOD:
+            print ("ok")
+            emaList = numpy.array(ema_list)
+            ema = talib.EMA(emaList, 5)
+            print("all EMA calculated so far")
+            print(ema)
+            last_ema = float(ema[-1])
+            print("the current EMA is {}".format(last_ema))
 
         
 
