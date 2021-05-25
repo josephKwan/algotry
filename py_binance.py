@@ -8,11 +8,12 @@ SOCKET = "wss://stream.binance.com:9443/ws/ethbusd@kline_1m"
 RSI_PERIOD = 14
 RSI_OVERBOUGHT = 70
 RSI_OVERSOLD = 30
-EMA_PERIOD = 5
+EMA_PERIOD = 4
 TRADE_SYMBOL = 'ETHBUSD'
 TRADE_QUANTITY = 0.15
 
 closes = []
+ema_list =[]
 in_position = False
 
 client = Client(config.API_KEY, config.API_SECRET, tld='us')
@@ -46,6 +47,19 @@ def on_message(ws, message):
 
     is_candle_closed = candle['x']
     close = candle['c']
+    
+    if len(ema_list) > 4:
+        ema_list.pop(0)
+    else:
+        ema_list.append(float(close))
+
+    if len(ema_list) > EMA_PERIOD:
+        print ("ok")
+        emaList = numpy.array(ema_list)
+        ema = talib.EMA(emaList, 5)
+        print("all EMA calculated so far")
+        last_ema = float(ema[-1])
+        print("the current EMA is {}".format(last_ema))
 
     if is_candle_closed:
         print("candle closed at {}".format(close))
@@ -53,13 +67,7 @@ def on_message(ws, message):
         print("closes")
         print(closes)
 
-        if len(closes) > EMA_PERIOD:
-            np_closes = numpy.array(closes)
-            ema = talib.EMA(np_closes, EMA_PERIOD)
-            print("all EMA calculated so far")
-            print(ema)
-            last_ema = ema[-1]
-            print("the current rsi is {}".format(last_ema))
+        
 
         if len(closes) > RSI_PERIOD:
             np_closes = numpy.array(closes)
