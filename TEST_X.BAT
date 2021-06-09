@@ -1,0 +1,1 @@
+python C:\Users\Administrator\Desktop\binance_project\binance-tutorials\rsibot\bot_x.py
